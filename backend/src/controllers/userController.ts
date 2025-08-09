@@ -1,10 +1,8 @@
 import { Request, Response } from 'express';
-import { User } from '../models/User';
 import { validateUserFields } from '../utils/validation';
 import { hashPassword, comparePassword } from '../utils/passwordUtils';
 import { generateToken } from '../utils/tokenUtils';
-import { AuthRequest } from '../middleware/auth';
-import { createUser, LoginUser } from '../db/userQuery';
+import { createUser, LoginUser } from '../db/userQueries';
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
     try {
