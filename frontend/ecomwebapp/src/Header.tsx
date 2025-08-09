@@ -133,7 +133,7 @@ function Header() {
             </div>
             <nav style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                 <button onClick={() => window.location.href = "/cart"} className="btn btn-primary">Cart</button>
-                {fetchUser ?
+                {fetchUser && JSON.parse(fetchUser).user ?
                 <Dropdown>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                         {JSON.parse(fetchUser).user.name}

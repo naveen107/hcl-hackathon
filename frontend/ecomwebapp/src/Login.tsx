@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 
-const SignUp: React.FC = () => {
-    const [form, setForm] = useState({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-    });
-    const [data, setData] = useState([]);
-    const [error, setError] = useState('');
+const Login: React.FC = () => {
+    const [form, setForm] = useState({ email: '', password: '' });
     const [emailError, setEmailError] = useState('');
-    const [loginbuttonClicked, setLoginButtonClicked] = useState(false);
+    const [error, setError] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,50 +14,45 @@ const SignUp: React.FC = () => {
     const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
         const email = e.target.value;
         setForm({ ...form, email });
-        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-            setEmailError('Please enter a valid email address');
-        } else {
-            setEmailError('');
-        }
+
+        const emailValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+        setEmailError(emailValid ? '' : 'Please enter a valid email address');
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!form.name || !form.email || !form.password || !form.confirmPassword) {
-            setError('All fields are required.');
-            return;
-        }
-        if (form.password !== form.confirmPassword) {
-            setError('Passwords do not match.');
-            return;
-        }
-        setError('');
-        alert('Sign up successful!');
-    };
 
-    useEffect(() => {
+        if (!form.email || !form.password) {
+            setError('Email and password are required.');
+            return;
+        }
+
+        if (emailError) {
+            setError('Please correct the email address.');
+            return;
+        }
+
+        setError('');
+
         fetch("http://localhost:3001/api/user/login", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ email: form.email, password: form.password }), // Corrected line
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: form.email, password: form.password }),
         })
-        .then(res => {
-            if (!res.ok) { // Handle non-2xx responses
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            return res.json();
-        })
-        .then(data => localStorage.setItem('user', JSON.stringify(data)))
-        .catch(error => console.error('Error:', error));
-        setLoginButtonClicked(false);
-    }, [loginbuttonClicked]);
-
-    function setLogin() {
-        setLoginButtonClicked(true);
-        window.location.href = "/";
-    }
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                return res.json();
+            })
+            .then(data => {
+                localStorage.setItem('user', JSON.stringify(data));
+                alert("Login successful!");
+                window.location.href = "/";
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+                setError('Login failed. Please check your credentials.');
+            });
+    };
 
     return (
         <>
@@ -99,8 +87,6 @@ const SignUp: React.FC = () => {
                             value={form.email}
                             onChange={onChangeEmail}
                             style={{ width: '100%', padding: 8, marginTop: 4 }}
-                            pattern='^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-                            title='Please enter a valid email address'
                             required
                         />
                     </div>
@@ -116,7 +102,8 @@ const SignUp: React.FC = () => {
                             required
                         />
                     </div>
-                    <button type="submit" style={{ width: '100%', padding: 10, background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4 }} onClick={() =>  setLogin()}>
+                    {error && <div style={{ color: 'red', marginBottom: 16 }}>{error}</div>}
+                    <button type="submit" style={{ width: '100%', padding: 10, background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4 }}>
                         Login
                     </button>
                 </form>
@@ -126,4 +113,4 @@ const SignUp: React.FC = () => {
     );
 };
 
-export default SignUp;
+export default Login;
