@@ -14,6 +14,7 @@ function Header() {
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const fetchUser = localStorage.getItem('user');
 
     function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
         const value = event.target.value;
@@ -132,16 +133,29 @@ function Header() {
             </div>
             <nav style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                 <button onClick={() => window.location.href = "/cart"} className="btn btn-primary">Cart</button>
+                {fetchUser && JSON.parse(fetchUser).user ?
                 <Dropdown>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Login
+                        {JSON.parse(fetchUser).user.name}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => window.location.href = "/login"}>Existing customer Login</Dropdown.Item>
-                        <Dropdown.Item onClick={() => window.location.href = "/signup"}>New customer Sign Up</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Orders</Dropdown.Item>
+                        <Dropdown.Item onClick={() => window.location.href = "/orders"}>Orders</Dropdown.Item>
+                        <Dropdown.Item onClick={() => window.location.href = "/Logout"}>Logout</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
+                    
+                    :
+                    <Dropdown>
+                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                            Login
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => window.location.href = "/login"}>Existing customer Login</Dropdown.Item>
+                            <Dropdown.Item onClick={() => window.location.href = "/signup"}>New customer Sign Up</Dropdown.Item>
+                            <Dropdown.Item href="#/action-2">Orders</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                }
             </nav>
         </header>
     );
