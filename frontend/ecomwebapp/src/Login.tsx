@@ -9,6 +9,7 @@ const SignUp: React.FC = () => {
         password: '',
         confirmPassword: '',
     });
+    const [data, setData] = useState([]);
     const [error, setError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [loginbuttonClicked, setLoginButtonClicked] = useState(false);
@@ -55,10 +56,15 @@ const SignUp: React.FC = () => {
             }
             return res.json();
         })
-        .then(data => console.log('Success:', data))
+        .then(data => localStorage.setItem('user', JSON.stringify(data)))
         .catch(error => console.error('Error:', error));
         setLoginButtonClicked(false);
     }, [loginbuttonClicked]);
+
+    function setLogin() {
+        setLoginButtonClicked(true);
+        window.location.href = "/";
+    }
 
     return (
         <>
@@ -110,7 +116,7 @@ const SignUp: React.FC = () => {
                             required
                         />
                     </div>
-                    <button type="submit" style={{ width: '100%', padding: 10, background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4 }} onClick={() =>  setLoginButtonClicked(true)}>
+                    <button type="submit" style={{ width: '100%', padding: 10, background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4 }} onClick={() =>  setLogin()}>
                         Login
                     </button>
                 </form>

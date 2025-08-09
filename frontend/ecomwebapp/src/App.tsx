@@ -47,7 +47,7 @@ function App() {
           {error && <p>Error: {error.message}</p>}
           {data.length > 0 ? (
             data.map((item: Product) => (
-              <div key={item.id} className="card mb-3" style={{ maxWidth: '540px' }}>
+              <div key={item.id} className="card mb-3" style={{ maxWidth: '300px' }}>
                 <div style={{display: 'flex', flexDirection: 'row', gap: '1rem'}}>
                   <div className="col-md-8">
                     <div className="card-body">

@@ -14,6 +14,7 @@ function Header() {
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const fetchUser = localStorage.getItem('user');
 
     function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
         const value = event.target.value;
@@ -132,16 +133,20 @@ function Header() {
             </div>
             <nav style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                 <button onClick={() => window.location.href = "/cart"} className="btn btn-primary">Cart</button>
-                <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Login
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => window.location.href = "/login"}>Existing customer Login</Dropdown.Item>
-                        <Dropdown.Item onClick={() => window.location.href = "/signup"}>New customer Sign Up</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Orders</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
+                {fetchUser ?
+                    <button onClick={() => window.location.href = "/logout"} className="btn btn-secondary">Logout</button>
+                    :
+                    <Dropdown>
+                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                            Login
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => window.location.href = "/login"}>Existing customer Login</Dropdown.Item>
+                            <Dropdown.Item onClick={() => window.location.href = "/signup"}>New customer Sign Up</Dropdown.Item>
+                            <Dropdown.Item href="#/action-2">Orders</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                }
             </nav>
         </header>
     );
