@@ -1,3 +1,4 @@
+import { comparePassword } from '../utils/passwordUtils'; // bcrypt compare
 import { supabase } from '../config/superbaseClient';
 
 export const createUser = async (
@@ -32,15 +33,16 @@ req:any,
 };
 
 
+
 export const LoginUser = async (req: any) => {
   try {
-    const { emailOrMobile, password } = req;
+    const { email, password } = req;
 
-    // Fetch user by email  with is_agent=false & is_admin=false
+    // Fetch user by email OR mobile, with is_agent=false & is_admin=false
     const { data, error } = await supabase
       .from('user')
       .select('*')
-      .or(`email.eq.${emailOrMobile}`)
+      .or(`email.eq.${email}`)
       .eq('is_agent', false)
       .eq('is_admin', false)
       .limit(1);
@@ -50,10 +52,13 @@ export const LoginUser = async (req: any) => {
       return { success: false, error: error.message };
     }
 
+    // Verify password
     const user = data?.[0];
-    if (!user) {
+    const isPasswordValid = await comparePassword(password,  user.password);
+    if (!user && !isPasswordValid) {
       return { success: false, error: 'User not found.' };
     }
+
 
     return { success: true, data: user };
   } catch (err: any) {
