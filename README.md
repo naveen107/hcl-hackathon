@@ -86,7 +86,7 @@ The platform is designed with scalability in mind to handle increasing traffic a
 ## Architecture Diagram
 Below is a high-level architecture diagram for the platform:
 
----- -----
+![Architecture Diagram](./architecture.png)
 
 ## Testing
 We ensure the platform's reliability and robustness through comprehensive testing:
