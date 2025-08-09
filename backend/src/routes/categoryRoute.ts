@@ -5,9 +5,9 @@ import { authMiddleware } from '../middleware/auth';
 const router = express.Router();
 
 router.post('/create',authMiddleware, createCategory);
-router.get('/get/:id',authMiddleware, getCategory);
+router.get('/get',authMiddleware, getCategory);
 router.get('/get',authMiddleware, getCategories);
-router.put('/update/:id', authMiddleware,updateCategory)
-router.delete('/delete/:id',authMiddleware,deleteCategory)
+router.put('/update', authMiddleware,updateCategory)
+router.delete('/delete',authMiddleware,deleteCategory)
 
 export default router;

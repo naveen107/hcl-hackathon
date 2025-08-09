@@ -53,7 +53,7 @@ export const getCategory = async (req: Request, res: Response) => {
     if (!id) {
       return res.status(400).json({ success: false, error: 'Category ID is required' });
     }
-      const { data, error } = await getCategoryQuery(id);
+      const { data, error } = await getCategoryQuery(Number(id));
   
       if (error) {
         return res.status(400).json({ success: false, error: error });

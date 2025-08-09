@@ -37,7 +37,7 @@ export const getCategoriesQuery = async () => {
   }
 };
 
-export const getCategoryQuery = async (id) => {
+export const getCategoryQuery = async (id:number) => {
     try {
       const { data, error } = await supabase
         .from('category')
