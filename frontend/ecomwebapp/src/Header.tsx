@@ -134,7 +134,16 @@ function Header() {
             <nav style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                 <button onClick={() => window.location.href = "/cart"} className="btn btn-primary">Cart</button>
                 {fetchUser ?
-                    <button onClick={() => window.location.href = "/logout"} className="btn btn-secondary">Logout</button>
+                <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        {JSON.parse(fetchUser).user.name}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => window.location.href = "/orders"}>Orders</Dropdown.Item>
+                        <Dropdown.Item onClick={() => window.location.href = "/Logout"}>Logout</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+                    
                     :
                     <Dropdown>
                         <Dropdown.Toggle variant="success" id="dropdown-basic">
