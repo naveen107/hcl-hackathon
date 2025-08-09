@@ -13,19 +13,32 @@ This project is a B2B e-commerce platform designed to streamline the buying and 
 ## Technology Stack
 We have chosen the following technologies to build this platform:
 
-### 1. **Node.js**
+### Frontend
+1. **React.js**
+   - **Why?**: React.js is a powerful library for building dynamic and responsive user interfaces. Its component-based architecture ensures reusability and maintainability.
+   
+2. **TypeScript**
+   - **Why?**: TypeScript adds static typing to JavaScript, reducing runtime errors and improving code quality.
+
+3. **Bootstrap / Tailwind CSS**
+   - **Why?**: These CSS frameworks simplify the process of creating responsive and visually appealing designs. Tailwind CSS provides utility-first styling, while Bootstrap offers pre-designed components.
+
+---
+
+### Backend
+1. **Node.js**
    - **Why?**: Node.js is a lightweight, efficient, and scalable runtime environment for building server-side applications. Its non-blocking I/O model makes it ideal for handling multiple requests simultaneously, which is crucial for an e-commerce platform.
 
-### 2. **TypeScript**
-   - **Why?**: TypeScript adds static typing to JavaScript, making the codebase more maintainable and less prone to runtime errors. It improves developer productivity and ensures better collaboration in a team environment.
+2. **TypeScript**
+   - **Why?**: TypeScript ensures type safety and improves code maintainability, making it easier to manage complex backend logic.
 
-### 3. **PostgreSQL**
+3. **PostgreSQL**
    - **Why?**: PostgreSQL is a powerful, open-source relational database that provides advanced features like ACID compliance, scalability, and support for complex queries. It is well-suited for managing structured data like products, categories, and user information.
 
-### 4. **REST API**
+4. **REST API**
    - **Why?**: REST APIs provide a standardized way to interact with the backend services. They ensure seamless communication between the frontend and backend, making the platform modular and easy to integrate with other systems.
 
-### 5. **Algolia**
+5. **Algolia**
    - **Why?**: Algolia is a fast and reliable search-as-a-service platform. It enhances the user experience by providing instant and accurate search results, which is critical for an e-commerce platform with a large product catalog.
 
 ---
@@ -73,6 +86,7 @@ The platform is designed with scalability in mind to handle increasing traffic a
 ## Architecture Diagram
 Below is a high-level architecture diagram for the platform:
 
+---- -----
 
 ## Testing
 We ensure the platform's reliability and robustness through comprehensive testing:
