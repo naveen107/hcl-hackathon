@@ -61,6 +61,10 @@ The platform is divided into the following modules:
 ### 5. **Cart**
    - Enable users to add products to their cart and proceed to checkout.
 
+### 6. **Coupon/Discount**
+   - Manage discount codes and promotional offers.
+   - Apply coupons during checkout to provide discounts on orders.
+
 ---
 
 ## Dashboard
