@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { algoliaClient, algoliaWriteClient } from "../lib/algolia";
 import {
   createProductQuery,
   getProductsQuery,
@@ -123,3 +124,36 @@ export const deleteProduct = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const searchProducts = async (req: Request, res: Response) => {
+  const { q } = req.query;
+  const algoliaInstance = algoliaClient();
+  try{
+    const { results } = await algoliaInstance.search({
+      requests: [
+        {
+          indexName:  process.env.ALGOLIA_SEARCH_INDEX as string,
+          query: q as string,
+        },
+      ],
+    });
+    return res.status(200).json({
+      success: true,
+      results
+    });
+  } catch (error) {
+    console.error('Error searching products:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Internal server error while searching products'
+    })
+  }
+}
+
+export const addProductIndex = async (req: Request, res: Response) => {
+  const algoliaInstance = algoliaWriteClient();
+  await algoliaInstance.saveObject({
+    indexName: process.env.ALGOLIA_SEARCH_INDEX as string,
+    body: req.body,
+  });
+}
