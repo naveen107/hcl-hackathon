@@ -10,6 +10,7 @@ const SignUp: React.FC = () => {
         confirmPassword: '',
     });
     const [error, setError] = useState('');
+    const [loginbuttonClicked, setLoginButtonClicked] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [loginbuttonClicked, setLoginButtonClicked] = useState(false);
 
