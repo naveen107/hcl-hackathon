@@ -48,7 +48,7 @@ function App() {
           {data.length > 0 ? (
             data.map((item: Product) => (
               <div key={item.id} className="card mb-3" style={{ maxWidth: '540px' }}>
-                <div className="row g-0">
+                <div style={{display: 'flex', flexDirection: 'row', gap: '1rem'}}>
                   <div className="col-md-8">
                     <div className="card-body">
                       <h5 className="card-title">{item.name}</h5>
