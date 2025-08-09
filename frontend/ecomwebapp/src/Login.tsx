@@ -10,6 +10,7 @@ const Login: React.FC = () => {
         confirmPassword: '',
     });
     const [error, setError] = useState('');
+    const [loginbuttonClicked, setLoginButtonClicked] = useState(false);
     const [emailError, setEmailError] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +57,8 @@ const Login: React.FC = () => {
         })
         .then(data => console.log('Success:', data))
         .catch(error => console.error('Error:', error));
-    }, []);
+        setLoginButtonClicked(false);
+    }, [loginbuttonClicked]);
 
     return (
         <>
@@ -107,7 +109,7 @@ const Login: React.FC = () => {
                         />
                     </div>
                     
-                    <button type="submit" style={{ width: '100%', padding: 10, background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4 }}>
+                    <button type="submit" style={{ width: '100%', padding: 10, background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4 }} onClick={() => setLoginButtonClicked(true)}>
                         Login
                     </button>
                 </form>
