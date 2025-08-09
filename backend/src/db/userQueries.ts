@@ -36,13 +36,13 @@ req:any,
 
 export const LoginUser = async (req: any) => {
   try {
-    const { email, password } = req;
+    const { email,mobile, password } = req;
 
     // Fetch user by email OR mobile, with is_agent=false & is_admin=false
     const { data, error } = await supabase
       .from('user')
       .select('*')
-      .or(`email.eq.${email}`)
+      .or(`email.eq.${email}, mobile.eq.${mobile}`)
       .eq('is_agent', false)
       .eq('is_admin', false)
       .limit(1);

@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import userRoutes from './routes/userRoute';
+import Routes from './routes';
 dotenv.config();
 
 const app: Application = express();
@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
   
 // Routes
-app.use('/api/users', userRoutes);
+app.use('/api', Routes);
 app.listen(PORT,()=>{
     console.log(`Ecommerce app running this port ${PORT}` )
 })

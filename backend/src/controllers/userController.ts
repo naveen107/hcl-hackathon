@@ -1,10 +1,8 @@
 import { Request, Response } from 'express';
-import { User } from '../models/User';
 import { validateUserFields } from '../utils/validation';
 import { hashPassword, comparePassword } from '../utils/passwordUtils';
 import { generateToken } from '../utils/tokenUtils';
-import { AuthRequest } from '../middleware/auth';
-import { createUser, LoginUser } from '../db/userQuery';
+import { createUser, LoginUser } from '../db/userQueries';
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -37,21 +35,10 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     try {
 
         await validateUserFields(req.body)
-
         // Get user
-        const { data: user, error: fetchError } =  await LoginUser(req.body);
-        if (fetchError) throw fetchError;
-
-        // Compare password
-        const isPasswordValid = await comparePassword(req.body.password, user.password);
-        if (!user && !isPasswordValid) {
-            res.status(401).json({ error: 'Invalid credentials' });
-            return;
-        }
-
+        const { data: user } =  await LoginUser(req.body);
         // Token
         const token = generateToken(user.id as number);
-
         res.status(200).json({
             message: 'Login successful',
             token,
