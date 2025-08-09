@@ -46,10 +46,11 @@ function App() {
           <h2>Products</h2>
           {error && <p>Error: {error.message}</p>}
           {data.length > 0 ? (
-            data.map((item: Product) => (
-              <div key={item.id} className="card mb-3" style={{ maxWidth: '300px' }}>
-                <div style={{display: 'flex', flexDirection: 'row', gap: '1rem'}}>
-                  <div className="col-md-8">
+            <div className="row">
+              {data.map((item: Product) => (
+                <div key={item.id} className="col-md-4 mb-4">
+                  <div className="card h-100">
+                    <img src={item.image} className="card-img-top" alt={item.name} />
                     <div className="card-body">
                       <h5 className="card-title">{item.name}</h5>
                       <p className="card-text">{item.price}</p>
@@ -57,8 +58,8 @@ function App() {
                     </div>
                   </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           ) : (
             <p>No products available.</p>
           )}
