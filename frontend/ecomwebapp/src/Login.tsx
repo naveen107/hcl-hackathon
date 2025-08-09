@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 
-const Login: React.FC = () => {
+const SignUp: React.FC = () => {
     const [form, setForm] = useState({
         name: '',
         email: '',
@@ -11,6 +11,7 @@ const Login: React.FC = () => {
     });
     const [error, setError] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [loginbuttonClicked, setLoginButtonClicked] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -46,7 +47,7 @@ const Login: React.FC = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email: "user@example.com" }), // Corrected line
+            body: JSON.stringify({ email: form.email, password: form.password }), // Corrected line
         })
         .then(res => {
             if (!res.ok) { // Handle non-2xx responses
@@ -56,7 +57,8 @@ const Login: React.FC = () => {
         })
         .then(data => console.log('Success:', data))
         .catch(error => console.error('Error:', error));
-    }, []);
+        setLoginButtonClicked(false);
+    }, [loginbuttonClicked]);
 
     return (
         <>
@@ -84,17 +86,19 @@ const Login: React.FC = () => {
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div style={{ marginBottom: 16 }}>
-                        <label>Name</label>
+                        <label>Email</label>
                         <input
-                            type="text"
-                            name="name"
-                            value={form.name}
-                            onChange={handleChange}
+                            type="email"
+                            name="email"
+                            value={form.email}
+                            onChange={onChangeEmail}
                             style={{ width: '100%', padding: 8, marginTop: 4 }}
+                            pattern='^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+                            title='Please enter a valid email address'
                             required
                         />
                     </div>
-                    
+                    {emailError && <div style={{ color: 'red', marginBottom: 16 }}>{emailError}</div>}
                     <div style={{ marginBottom: 16 }}>
                         <label>Password</label>
                         <input
@@ -106,8 +110,7 @@ const Login: React.FC = () => {
                             required
                         />
                     </div>
-                    
-                    <button type="submit" style={{ width: '100%', padding: 10, background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4 }}>
+                    <button type="submit" style={{ width: '100%', padding: 10, background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4 }} onClick={() =>  setLoginButtonClicked(true)}>
                         Login
                     </button>
                 </form>
@@ -117,4 +120,4 @@ const Login: React.FC = () => {
     );
 };
 
-export default Login;
+export default SignUp;
